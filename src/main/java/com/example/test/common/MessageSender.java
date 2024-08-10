@@ -41,19 +41,25 @@ public class MessageSender {
     public void send(final String recipient, final String text) {
         log.info("recipient[{}], text[{}]", recipient, text);
 
-        final Message message = new Message();
-        message.setFrom(SMS_SENDER);
-        message.setTo(recipient);
-        message.setText(text);
-
         try {
-            // send 메소드로 ArrayList<Message> 객체를 넣어도 동작합니다!
-            messageService.send(message);
-        } catch (NurigoMessageNotReceivedException exception) {
-            log.error("message send fail to[{}]", recipient, exception);
-            log.error("failedMessageList[{}]", exception.getFailedMessageList());
+            final String replacedPhoneNumber = recipient.replace("-", "");
+
+            final Message message = new Message();
+            message.setFrom(SMS_SENDER);
+            message.setTo(replacedPhoneNumber);
+            message.setText(text);
+
+            try {
+                // send 메소드로 ArrayList<Message> 객체를 넣어도 동작합니다!
+                messageService.send(message);
+            } catch (NurigoMessageNotReceivedException exception) {
+                log.error("message send fail to[{}]", recipient, exception);
+                log.error("failedMessageList[{}]", exception.getFailedMessageList());
+            } catch (Exception exception) {
+                log.error("message send fail to[{}]", recipient, exception);
+            }
         } catch (Exception exception) {
-            log.error("message send fail to[{}]", recipient, exception);
+            log.error("recipient[{}] is not include \"-\"", recipient);
         }
     }
 }
