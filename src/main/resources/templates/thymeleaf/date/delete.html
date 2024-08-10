@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미팅삭제</title>
+    <!-- 부트스트랩 CSS 링크 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function showPopup() {
+            alert("미팅 신청이 삭제되었습니다.");
+        }
+        /*]]>*/
+    </script>
+    <style>
+            body {
+        }
+        </style>
+</head>
+
+<body>
+	
+    <div th:insert="thymeleaf/th_top_menu :: test_top_menu"></div>
+    <div class="container">
+        <h2>미팅신청</h2>
+        <form th:action="@{/date/deleteOK}" method="post" onsubmit="showPopup()">
+            <div class="form-group">
+            <label for="receiverRealName"><span th:text="${vo2.receiverRealName}"></span>님과의 미팅신청을 삭제하시겠습니까?</label>
+            <input type="hidden" class="form-control" id="num" name="num" th:value="${vo2.num}" required>
+            </div>
+            <button id="btn" type="submit" class="btn btn-danger">삭제하기</button>
+        </form>
+    </div>
+    <div class="footer-content">
+        <div class="row">
+            <div class="col-3 d-flex justify-content-center">
+                <a th:href="@{/}" class="nav-link">
+                    <img src="/images/home_icon.png" alt="Home" style="width: 50px; height: 50px;">
+                </a>
+            </div>
+            <div class="col-3 d-flex justify-content-center" th:if="${session.username}">
+                <a th:href="@{/user/logout}" class="nav-link" onclick="showLogoutPopup()">
+                    <img src="/images/logout_icon.png" alt="Logout" style="width: 50px; height: 50px;">
+                </a>
+            </div>
+            <div class="col-3 d-flex justify-content-center" th:unless="${session.username}">
+                <a th:href="@{/user/login}" class="nav-link">
+                    <img src="/images/login_icon.png" alt="Login" style="width: 50px; height: 50px;">
+                </a>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+                <a th:href="@{/user}" class="nav-link">
+                    <img src="/images/mypage_icon.png" alt="My Page" style="width: 50px; height: 50px;">
+                </a>
+            </div>
+            <div class="col-3 d-flex justify-content-center">
+                <a th:href="@{/menu}" class="nav-link">
+                    <img src="/images/meeting_icon2.png" alt="Menu" style="width: 50px; height: 50px;">
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
