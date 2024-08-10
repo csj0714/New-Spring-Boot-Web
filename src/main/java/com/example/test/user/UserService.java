@@ -2,6 +2,7 @@ package com.example.test.user;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,11 @@ public class UserService {
     private HttpSession session;
 
     public UserDTO insertOK(UserDTO vo) {
+
+        /**
+         * 비밀번호 단방향 암호화
+         */
+        vo.setPw(BCrypt.hashpw(vo.getPw(), BCrypt.gensalt()));
         return userRepo.save(vo);
     }
 
@@ -94,8 +100,15 @@ public class UserService {
     }
 
     public UserDTO loginOK(UserDTO vo) {
-        return userRepo.findByUsernameAndPw(vo.getUsername(), vo.getPw());
+        UserDTO user = userRepo.findByUsername(vo.getUsername());
+
+        /**
+         * 비밀번호 암호화 매칭 확인
+         */
+        if (BCrypt.checkpw(vo.getPw(), user.getPw())) {
+            return user;
+        } else {
+            return null;
+        }
     }
-
-
 }
