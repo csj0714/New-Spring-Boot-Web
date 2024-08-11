@@ -19,16 +19,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class DateService {
-	
-	@Autowired
-	private DateRepository DateRepo;
-	
-	@Autowired
-	private UserRepository userRepo;
-	
-	@Autowired
-	private HttpSession session;
-	
+
+    @Autowired
+    private DateRepository DateRepo;
+
+    @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
+    private HttpSession session;
+
     private List<UserDTO> selectedUsers;
     private long lastSelectedTime;
     private final Lock lock = new ReentrantLock();
@@ -84,35 +84,44 @@ public class DateService {
     }
 
 
-	public DateDTO registerDate(DateDTO dto) {
-		log.info("디티오:{}",dto.toString());
-		return DateRepo.save(dto);
-	}
+    public DateDTO registerDate(DateDTO dto) {
+        log.info("디티오:{}", dto.toString());
+        return DateRepo.save(dto);
+    }
 
-	public List<DateDTO> selectAll() {
-		return DateRepo.findAll();
-	}
-
-
-	public List<DateDTO> selectOne(int num) {
-		return DateRepo.findByApplicantNum(num);
-	}
+    public List<DateDTO> selectAll() {
+        return DateRepo.findAll();
+    }
 
 
-	public DateDTO selectByReceiverAndApplicant(int receiverNum, int applicantNum) {
-		return DateRepo.findByReceiverNumAndApplicantNum(receiverNum, applicantNum);
-	}
-
-	public int deleteByReceiverAndApplicant(int receiverNum, int applicantNum) {
-		return DateRepo.deleteByReceiverNumAndApplicantNum(receiverNum, applicantNum);
-	}
-	@Transactional
-	public int deleteByNum(int num) {
-		return DateRepo.deleteByNum(num);
-	}
+    public List<DateDTO> selectOne(int num) {
+        return DateRepo.findByApplicantNum(num);
+    }
 
 
-    public List<DateDTO> selectOneReceiver(int num) { return DateRepo.findByReceiverNum(num);
+    public DateDTO selectByReceiverAndApplicant(int receiverNum, int applicantNum) {
+        return DateRepo.findByReceiverNumAndApplicantNum(receiverNum, applicantNum);
+    }
+
+    public int deleteByReceiverAndApplicant(int receiverNum, int applicantNum) {
+        return DateRepo.deleteByReceiverNumAndApplicantNum(receiverNum, applicantNum);
+    }
+
+    @Transactional
+    public int deleteByNum(int num) {
+        return DateRepo.deleteByNum(num);
+    }
+
+
+    /**
+     * 나에게 신청한 데이트 목록 조회
+     *
+     * @param num : 자신의 user ID (Key)
+     * @return : 데이트 목록
+     */
+    public List<DateDTO> selectOneReceiver(int num) {
+        log.info("num[{}]", num);
+        return DateRepo.findByReceiverNumber(num);
     }
 
     public int updateAcceptField(String accept, int receiverNum, int applicantNum) {

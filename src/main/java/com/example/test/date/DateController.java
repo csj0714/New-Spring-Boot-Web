@@ -133,6 +133,11 @@ public class DateController {
         return "thymeleaf/date/selectOne";
     }
 
+    /**
+     * 나에게 신청한 데이트 목록 조회
+     *
+     * @return : 데이트 목록
+     */
     @GetMapping("/date/dateReceiveOne") //신청받은 소개팅
     public String dateReceiveOne(Model model) {
 
