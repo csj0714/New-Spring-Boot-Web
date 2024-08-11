@@ -41,25 +41,27 @@ public class MessageSender {
     public void send(final String recipient, final String text) {
         log.info("recipient[{}], text[{}]", recipient, text);
 
+        String phoneNumber;
+        if (recipient.contains("-")) {
+            // 휴대폰 번호에 "-"가 포함된 사용자의 경우, 하이픈 제거
+            phoneNumber = recipient.replace("-", "");
+        } else {
+            phoneNumber = recipient;
+        }
+
+        final Message message = new Message();
+        message.setFrom(SMS_SENDER);
+        message.setTo(phoneNumber);
+        message.setText(text);
+
         try {
-            final String replacedPhoneNumber = recipient.replace("-", "");
-
-            final Message message = new Message();
-            message.setFrom(SMS_SENDER);
-            message.setTo(replacedPhoneNumber);
-            message.setText(text);
-
-            try {
-                // send 메소드로 ArrayList<Message> 객체를 넣어도 동작합니다!
-                messageService.send(message);
-            } catch (NurigoMessageNotReceivedException exception) {
-                log.error("message send fail to[{}]", recipient, exception);
-                log.error("failedMessageList[{}]", exception.getFailedMessageList());
-            } catch (Exception exception) {
-                log.error("message send fail to[{}]", recipient, exception);
-            }
+            // send 메소드로 ArrayList<Message> 객체를 넣어도 동작합니다!
+            messageService.send(message);
+        } catch (NurigoMessageNotReceivedException exception) {
+            log.error("message send fail to[{}]", recipient, exception);
+            log.error("failedMessageList[{}]", exception.getFailedMessageList());
         } catch (Exception exception) {
-            log.error("recipient[{}] is not include \"-\"", recipient);
+            log.error("message send fail to[{}]", recipient, exception);
         }
     }
 }
