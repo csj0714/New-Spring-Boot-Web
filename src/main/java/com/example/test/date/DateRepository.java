@@ -34,6 +34,15 @@ public interface DateRepository extends JpaRepository<DateDTO, Object> {
     @Query("SELECT dt FROM DateDTO dt WHERE dt.receiverNum =:num")
     List<DateDTO> findByReceiverNumber(int num);
 
+    /**
+     * 이전에 존재하는 정보인지 조회
+     *
+     * @param applicantNum : 신청자 ID
+     * @param receiverNum  : 수신자 ID
+     * @return : 데이트 신청 여부
+     */
+    Boolean existsByApplicantNumAndReceiverNum(int applicantNum, int receiverNum);
+
     @Modifying
     @Transactional
     @Query("UPDATE DateDTO d SET d.accept = :accept WHERE d.receiverNum = :receiverNum AND d.applicantNum = :applicantNum")
