@@ -1,5 +1,6 @@
 package com.example.test.user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,9 @@ public class UserDTO {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "regdate", updatable = false)
     private Date regdate;
+
+    @OneToMany
+    private List<MeetingDTO> meetingDTOList = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {

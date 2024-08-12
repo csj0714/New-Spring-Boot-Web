@@ -22,32 +22,47 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="meetings")
+@Table(name = "meetings")
 public class MeetingDTO {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="num")//컬럼이름 설정
-	private int num;
-	
-	@Column(name="organizerNum",nullable = false)
-	private int organizerNum;
-	
-	@Column(name="organizerNickname",nullable = false)
-	private String organizerNickname;
-	
-	@Column(name="many",nullable = false)
-	private Integer many;
-	
-	@Column(name="school",nullable = false)
-	private String school;
-	
-	@Column(name="average",nullable = false)
-	private Integer average;
-	
-	@Column(name="introduce",nullable = false)
-	private String introduce;
-	
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "num")//컬럼이름 설정
+    private int num;
+
+    @Column(name = "organizerNum", nullable = false)
+    private int organizerNum;
+
+    @Column(name = "organizerNickname", nullable = false)
+    private String organizerNickname;
+
+    @Column(name = "many", nullable = false)
+    private Integer many;
+
+    @Column(name = "school", nullable = false)
+    private String school;
+
+    @Column(name = "average", nullable = false)
+    private Integer average;
+
+    @Column(name = "introduce", nullable = false)
+    private String introduce;
+
+    /*
+     * 추가한 필드
+     */
+    @Column(name = "region")
+    private String region; // 밋팅 지역 - 필수 조건
+
+    @Column(name = "job")
+    private String job; // 직업
+
+    @Column(name = "mood")
+    private String mood; // 분위기
+
+    @Column(name = "department")
+    private String department; // 학과
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "regdate", updatable = false)
     private Date regdate;
