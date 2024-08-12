@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -19,6 +16,17 @@ public class DateIdealController {
 
     private final HttpSession session;
     private final DateIdealService dateIdealService;
+
+    /**
+     * 데이트 이상형 조회
+     *
+     * @return : 데이트 이상형
+     */
+    @GetMapping
+    public ResponseEntity<DateIdeal> getDateIdeal() {
+        final int num = (int) session.getAttribute("num");
+        return ResponseEntity.ok(dateIdealService.findByNum(num));
+    }
 
     /**
      * 데이트 이상형 저장
