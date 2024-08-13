@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @Entity
-@Table(name = "date_ideal")
+@Table(name = "meeting_ideal")
 public class MeetingIdeal {
 
     @Id
