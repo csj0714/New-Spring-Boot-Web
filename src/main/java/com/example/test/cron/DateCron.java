@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
@@ -35,56 +36,72 @@ public class DateCron {
      */
     @Scheduled(cron = "${cron.date.matching.expression}", zone = "${cron.date.matching.zone}")
     public void dailyDateMatching() {
+        log.info("======daily date matching start=======");
 
         // 모든 사용자 조회
         final List<UserDTO> userList = userRepository.findAll();
 
         userList.forEach(user -> {
             final AtomicInteger count = new AtomicInteger(0);
+            log.info("user[{}]", user);
 
             // 현재 유저의 이상형 조회
-            final DateIdeal dateIdeal = dateIdealRepository.findByUser(user).orElseThrow();
+            Optional<DateIdeal> optional = dateIdealRepository.findByUser(user);
+            if (optional.isPresent()) {
 
-            // 필수 조건을 만족하는 유저 목록
-            final List<UserDTO> dateUsers = userList.stream()
-                    .filter(otherUser -> otherUser.getNum() != user.getNum())                 // 자기 자신 제외
-                    .filter(otherUser -> otherUser.getJob().equals(dateIdeal.getJob()))       // 직업이 일치하는 사람
-                    .filter(otherUser -> otherUser.getRegion().equals(dateIdeal.getRegion())) // 지역이 일치하는 사람
-                    .toList();
+                final DateIdeal dateIdeal = optional.get();
+                log.info("dateIdeal[{}]", dateIdeal);
 
-            final List<UserDTO> dateMatchingTargets = new ArrayList<>();
+                // 필수 조건을 만족하는 유저 목록
+                final List<UserDTO> dateUsers = userList.stream()
+                        .filter(otherUser -> otherUser.getNum() != user.getNum())                 // 자기 자신 제외
+                        .filter(otherUser -> otherUser.getJob() != null && otherUser.getJob().equals(dateIdeal.getJob()))       // 직업이 일치하는 사람
+                        .filter(otherUser -> otherUser.getRegion() != null && otherUser.getRegion().equals(dateIdeal.getRegion())) // 지역이 일치하는 사람
+                        .toList();
+                log.info("dateUsers[{}]", dateUsers);
 
-            // 최대 2명의 매칭 생성
-            if (count.get() < 3) {
-                dateUsers.forEach(dateUser -> {
-                    // 조건이 2개 이상 일치하고, 서로 데이트를 신청한 적이 없었을 경우만 해당
-                    if (isMatchCondition(dateIdeal, dateUser)
-                            && dateRepository.existsByApplicantNumAndReceiverNum(user.getNum(), dateUser.getNum())
-                            && dateRepository.existsByApplicantNumAndReceiverNum(dateUser.getNum(), user.getNum())) {
-                        dateMatchingTargets.add(dateUser);
-                        count.getAndIncrement();
-                    }
+                final List<UserDTO> dateMatchingTargets = new ArrayList<>();
+
+                // 최대 2명의 매칭 생성
+                if (count.get() < 3) {
+                    dateUsers.forEach(dateUser -> {
+                        // 조건이 2개 이상 일치하고, 서로 데이트를 신청한 적이 없었을 경우만 해당
+                        if (isMatchCondition(dateIdeal, dateUser)
+                                && !dateRepository.existsByApplicantNumAndReceiverNum(user.getNum(), dateUser.getNum())
+                                && !dateRepository.existsByApplicantNumAndReceiverNum(dateUser.getNum(), user.getNum())) {
+                            dateMatchingTargets.add(dateUser);
+                            count.getAndIncrement();
+                        }
+                    });
+                }
+
+                // 데이트 매칭 정보 생성
+                dateMatchingTargets.forEach(dateUser -> {
+                    log.debug("dateUser[{}]", dateUser);
+                    dateRepository.save(createDate(user, dateUser));
                 });
             }
-
-            // 데이트 매칭 정보 생성
-            dateMatchingTargets.forEach(dateUser -> dateRepository.save(createDate(user, dateUser)));
         });
+        log.info("======daily date matching end=======");
     }
 
     private boolean isMatchCondition(DateIdeal dateIdeal, UserDTO dateUser) {
         int count = 0;
 
         if (dateIdeal.getDepartment().equals(dateUser.getDepartment())) {
+            log.info("1++");
             count++;
         }
         if (dateIdeal.getMilitary().equals(dateUser.getMilitary())) {
+            log.info("2++");
             count++;
         }
         if (dateIdeal.getTall().equals(dateUser.getTall())) {
+            log.info("3++");
             count++;
         }
         if (dateIdeal.getForm().equals(dateUser.getForm())) {
+            log.info("4++");
             count++;
         }
 

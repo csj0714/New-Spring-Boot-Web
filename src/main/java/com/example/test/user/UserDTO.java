@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.test.common.AES128Converter;
 import jakarta.persistence.*;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +22,7 @@ import lombok.Data;
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})
 })
+@ToString
 public class UserDTO {
 
     @Id
@@ -93,6 +95,7 @@ public class UserDTO {
     @Column(name = "regdate", updatable = false)
     private Date regdate;
 
+    @ToString.Exclude
     @OneToMany
     private List<MeetingDTO> meetingDTOList = new ArrayList<>();
 

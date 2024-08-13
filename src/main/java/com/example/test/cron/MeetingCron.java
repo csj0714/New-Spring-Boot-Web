@@ -34,6 +34,8 @@ public class MeetingCron {
      */
     @Scheduled(cron = "${cron.meeting.matching.expression}", zone = "${cron.meeting.matching.zone}")
     public void dailyMeetingMatching() {
+        log.info("======daily meeting matching start=======");
+
         // 모든 사용자 조회
         final List<UserDTO> userList = userRepository.findAll();
 
@@ -41,22 +43,24 @@ public class MeetingCron {
         final List<MeetingDTO> allMeeting = meetingRepository.findAll();
 
         userList.forEach(user -> {
+            log.info("user[{}]", user);
             final AtomicInteger count = new AtomicInteger(0);
 
             // 현재 유저의 이상형 조회
             final MeetingIdeal ideal = meetingIdealRepository.findByUser(user).orElseThrow();
+            log.info("ideal[{}]", ideal);
 
             // 필수 조건을 만족하는 미팅 목록
             final List<MeetingDTO> meetingList = allMeeting.stream()
                     .filter(meeting -> meeting.getRegion().equals(ideal.getRegion()))
                     .toList();
+            log.info("meetingList[{}]", meetingList);
 
             final List<MeetingDTO> meetingMatchingTargets = new ArrayList<>();
 
             // 최대 2명의 매칭 생성
             if (count.get() < 3) {
                 meetingList.forEach(meeting -> {
-                    // 조건이 2개 이상 일치하고, 서로 데이트를 신청한 적이 없었을 경우만 해당
                     if (isMatchCondition(ideal, meeting)) {
                         meetingMatchingTargets.add(meeting);
                         count.getAndIncrement();
@@ -70,6 +74,7 @@ public class MeetingCron {
                 userRepository.save(user);
             });
         });
+        log.info("======daily meeting matching end=======");
     }
 
     private boolean isMatchCondition(MeetingIdeal ideal, MeetingDTO meeting) {
