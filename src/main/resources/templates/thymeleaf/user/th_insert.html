@@ -6,7 +6,7 @@
     <title>회원가입</title>
     <!-- 부트스트랩 CSS 링크 추가 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<style>
+    <style>
         .radio-buttons input[type="radio"] {
             display: none; /* 기존 라디오 버튼 숨기기 */
         }
@@ -40,15 +40,15 @@
         .container {
             margin-bottom: 80px; /* footer의 높이와 동일한 여백을 주세요 */
         }
-	</style>
+    </style>
 </head>
 <body>
-	<div th:insert="thymeleaf/th_top_menu :: test_top_menu"></div>
+<div th:insert="thymeleaf/th_top_menu :: test_top_menu"></div>
 <div class="container">
-	
+
     <h2>회원가입</h2>
     <form th:action="@{/user/insertOK}" method="post" enctype="multipart/form-data">
-		<div class="form-group">
+        <div class="form-group">
             <label for="realname">(필수) 이름:</label>
             <input type="text" class="form-control" id="realname" name="realname" th:required="true">
         </div>
@@ -60,16 +60,16 @@
             <label for="pw">(필수) 비밀번호:</label>
             <input type="password" class="form-control" id="pw" name="pw" th:required="true">
         </div>
-		<div class="form-group">
-		    <label for="gender">(필수) 성별:</label><br>
-		    <div class="radio-buttons" id="gender">
-		        <input type="radio" id="male" name="gender" value="남" th:required="true">
-		        <label for="male">남성</label>
-		        
-		        <input type="radio" id="female" name="gender" value="여">
-		        <label for="female">여성</label>
-		    </div>
-		</div>
+        <div class="form-group">
+            <label for="gender">(필수) 성별:</label><br>
+            <div class="radio-buttons" id="gender">
+                <input type="radio" id="male" name="gender" value="남" th:required="true">
+                <label for="male">남성</label>
+
+                <input type="radio" id="female" name="gender" value="여">
+                <label for="female">여성</label>
+            </div>
+        </div>
         <div class="form-group">
             <label for="username">(필수) 닉네임:</label>
             <input type="text" class="form-control" id="nickname" name="nickname" th:required="true">
@@ -95,31 +95,72 @@
             <input type="text" class="form-control" id="introduce" name="introduce" th:required="false">
         </div>
         <div class="form-group">
-            <label for="tel">직업:</label>
-            <input type="text" class="form-control" id="job" name="job" th:value="${job}">
+            <label for="occupation">직업:</label>
+            <select class="form-control" id="occupation" name="occupation">
+                <option value="">-- 직업 선택 --</option>
+                <option value="대학생">대학생</option>
+                <option value="대학원생">대학원생</option>
+                <option value="취준생">취준생</option>
+                <option value="직장인">직장인</option>
+            </select>
         </div>
+
         <div class="form-group">
-            <label for="school">학과:</label>
-            <input type="text" class="form-control" id="department" name="department" th:value="${department}">
+            <label for="major">학과:</label>
+            <select class="form-control" id="major" name="major">
+                <option value="">-- 학과 선택 --</option>
+                <option value="상경">상경</option>
+                <option value="사회과학">사회과학</option>
+                <option value="공학">공학</option>
+                <option value="교육">교육</option>
+                <option value="생활과학">생활과학</option>
+                <option value="인문">인문</option>
+                <option value="의약학">의약학</option>
+                <option value="미술">미술</option>
+                <option value="예술">예술</option>
+                <option value="체육">체육</option>
+                <option value="특수">특수</option>
+            </select>
         </div>
+
         <div class="form-group">
-            <label for="school">지역:</label>
-            <input type="text" class="form-control" id="region" name="region" th:value="${region}">
+            <label for="region">지역:</label>
+            <select class="form-control" id="region" name="region">
+                <option value="">-- 지역 선택 --</option>
+                <option value="서울">서울</option>
+                <option value="인천">인천</option>
+                <option value="경기남부">경기남부</option>
+                <option value="경기북부">경기북부</option>
+                <option value="대전">대전</option>
+                <option value="광주">광주</option>
+                <option value="대구">대구</option>
+                <option value="부산">부산</option>
+                <option value="울산">울산</option>
+                <option value="충남">충남</option>
+                <option value="충북">충북</option>
+                <option value="강원">강원</option>
+                <option value="전남">전남</option>
+                <option value="전북">전북</option>
+                <option value="경남">경남</option>
+                <option value="경북">경북</option>
+            </select>
         </div>
+
+
         <div class="form-group">
             <label for="smoking">흡연유무:</label><br>
             <div class="radio-buttons" id="smoking">
-                <input type="radio" id="yes" name="gender" value="yes" th:required="false">
-                <label for="male">흡연</label>
+                <input type="radio" id="yes-smoking" name="smoking" value="yes-smoking" th:required="false">
+                <label for="yes-smoking">흡연</label>
 
-                <input type="radio" id="no" name="gender" value="no">
-                <label for="female">비흡연</label>
+                <input type="radio" id="non-smoking" name="smoking" value="non-smoking">
+                <label for="non-smoking">비흡연</label>
             </div>
         </div>
         <div class="form-group">
             <label for="form">체형:</label><br>
             <div class="radio-buttons" id="form">
-                <input type="radio" id="thin" name="form" value="마른" th:required="false">
+                <input type="radio" id="thin" name="form" value="마른">
                 <label for="thin">마른</label>
 
                 <input type="radio" id="common" name="form" value="보통">
@@ -127,80 +168,92 @@
 
                 <input type="radio" id="chubby" name="form" value="통통">
                 <label for="chubby">통통</label>
+
+                <input type="radio" id="muscular" name="form" value="근육">
+                <label for="muscular">근육</label>
+
+                <input type="radio" id="slimfit" name="form" value="슬림탄탄">
+                <label for="slimfit">슬림탄탄</label>
+
+                <input type="radio" id="glamorous" name="form" value="글래머">
+                <label for="glamorous">글래머</label>
             </div>
         </div>
+
         <div class="form-group">
             <label for="army">병역:</label><br>
             <div class="radio-buttons" id="army">
                 <input type="radio" id="fulfilled" name="fulfilled" value="fulfilled" th:required="false">
-                <label for="male">군필</label>
+                <label for="fulfilled">군필</label>
 
                 <input type="radio" id="unfulfilled" name="unfulfilled" value="unfulfilled">
-                <label for="female">미필</label>
+                <label for="unfulfilled">미필</label>
             </div>
         </div>
         <div class="form-group">
-            <label for="tall">체형:</label><br>
+            <label for="tall">키:</label><br>
             <div class="radio-buttons" id="tall">
-                <input type="radio" id="160" name="tall" value="160" th:required="false">
-                <label for="thin">마른</label>
+                <input type="radio" id="160down" name="tall" value="160down" th:required="false">
+                <label for="160down">160미만</label>
 
-                <input type="radio" id="165" name="tall" value="165">
-                <label for="common">보통</label>
+                <input type="radio" id="160up" name="tall" value="160up">
+                <label for="160up">160이상 165미만</label>
 
-                <input type="radio" id="170" name="tall" value="170">
-                <label for="chubby">통통</label>
+                <input type="radio" id="165up" name="tall" value="165up">
+                <label for="165up">165이상 170미만</label>
 
-                <input type="radio" id="175" name="tall" value="175" th:checked="${tall == '175'}">
-                <label for="chubby">통통</label>
+                <input type="radio" id="170up" name="tall" value="170up">
+                <label for="170up">170이상 175미만</label>
 
-                <input type="radio" id="180" name="tall" value="180" th:checked="${tall == '180'}">
-                <label for="chubby">통통</label>
+                <input type="radio" id="175up" name="tall" value="175up">
+                <label for="175up">175이상 180미만</label>
 
-                <input type="radio" id="185" name="tall" value="185" th:checked="${tall == '185'}">
-                <label for="chubby">통통</label>
+                <input type="radio" id="180up" name="tall" value="180up">
+                <label for="180up">180이상 185미만</label>
 
-                <input type="radio" id="190" name="tall" value="190" th:checked="${tall == '190'}">
-                <label for="chubby">통통</label>
+                <input type="radio" id="185up" name="tall" value="185up">
+                <label for="185up">185이상 190이하</label>
+
+                <input type="radio" id="190up" name="tall" value="190up">
+                <label for="190up">190이상</label>
             </div>
         </div>
         <div class="form-group">
-            <label for="file_img">(선택) 프로필이미지:</label>
+            <label for="file">(선택) 프로필이미지:</label>
             <input type="file" class="form-control" id="file" name="file" th:required="false">
         </div>
         <button type="submit" class="btn btn-primary">가입</button>
         <a th:href="@{/user/login}" class="btn btn-primary">뒤로 가기</a>
     </form>
 </div>
-    <div class="footer-content">
-        <div class="row">
-            <div class="col-3 d-flex justify-content-center">
-                <a th:href="@{/}" class="nav-link">
-                    <img src="/images/home_icon.png" alt="Home" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center" th:if="${session.username}">
-                <a th:href="@{/user/logout}" class="nav-link" onclick="showLogoutPopup()">
-                    <img src="/images/logout_icon.png" alt="Logout" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center" th:unless="${session.username}">
-                <a th:href="@{/user/login}" class="nav-link">
-                    <img src="/images/login_icon.png" alt="Login" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center">
-                <a th:href="@{/user}" class="nav-link">
-                    <img src="/images/mypage_icon.png" alt="My Page" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center">
-                <a th:href="@{/menu}" class="nav-link">
-                    <img src="/images/meeting_icon2.png" alt="Menu" style="width: 50px; height: 50px;">
-                </a>
-            </div>
+<div class="footer-content">
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center">
+            <a th:href="@{/}" class="nav-link">
+                <img src="/images/home_icon.png" alt="Home" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center" th:if="${session.username}">
+            <a th:href="@{/user/logout}" class="nav-link" onclick="showLogoutPopup()">
+                <img src="/images/logout_icon.png" alt="Logout" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center" th:unless="${session.username}">
+            <a th:href="@{/user/login}" class="nav-link">
+                <img src="/images/login_icon.png" alt="Login" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+            <a th:href="@{/user}" class="nav-link">
+                <img src="/images/mypage_icon.png" alt="My Page" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+            <a th:href="@{/menu}" class="nav-link">
+                <img src="/images/meeting_icon2.png" alt="Menu" style="width: 50px; height: 50px;">
+            </a>
         </div>
     </div>
+</div>
 </body>
 </html>
-

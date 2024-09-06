@@ -58,10 +58,10 @@ public class MeetingController {
 		log.info("/register...");
 		
 		UserDTO vo2 = userService.selectOne(vo);
-		String username = (String)session.getAttribute("username");
+		String nickname = (String)session.getAttribute("nickname");
 		int num = (int)session.getAttribute("num");
 		
-		model.addAttribute("username", username);
+		model.addAttribute("nickname", nickname);
 		model.addAttribute("num", num);
 		
 		model.addAttribute("vo2", vo2);
@@ -96,18 +96,15 @@ public class MeetingController {
 		
 		return "thymeleaf/meeting/register";
 	}
-	@GetMapping("/meeting/selectOne")
+	@GetMapping("/meeting/selectAll")
 	public String selectOne(MeetingDTO vo, Model model) {
-		log.info("/selectOne...");
+		log.info("/selectAll...");
 
-		int meetingNum = vo.getNum();
-		int organizerNum = vo.getOrganizerNum();
+		List<MeetingDTO> vos = meetingService.selectAll();
 
+		model.addAttribute("vos", vos);
 
-		model.addAttribute("meetingNum", meetingNum);
-		model.addAttribute("organizerNum", organizerNum);
-
-		return "thymeleaf/meeting/selectOne";
+		return "thymeleaf/meeting/selectAll";
 	}
 	@PostMapping("/meeting/registerOK")
 	public String registerOK(MeetingDTO dto, UserDTO vo, Model model) {

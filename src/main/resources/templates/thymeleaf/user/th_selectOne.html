@@ -12,8 +12,7 @@
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            width: 460px;
-            height: 1670px;
+    
             background-color: #fff; /* 카드 배경색 */
             background-image: url('/images/my_card5.png');
             background-size: cover;
@@ -29,7 +28,7 @@
             text-align: center;
             padding: 10px 0;
         }
-    </style> 
+    </style>
     </style>
 </head>
 <body>
@@ -60,13 +59,13 @@
 					<img th:src="@{'/files/' + ${savename}}" alt="Image" width="100px">
 
 
- 
+
                 </div>
             </div>
             <div th:unless="${username}" class="text-center">
                 <p>회원 정보가 없습니다.</p>
             </div>
-            
+
             <div class="text-center">
                 <a th:href="@{/user/info/update}" class="btn btn-primary mr-2">정보 수정</a>
                 <a th:href="@{/user}" class="btn btn-primary">뒤로 가기</a>

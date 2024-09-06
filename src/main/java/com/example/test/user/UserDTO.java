@@ -91,6 +91,9 @@ public class UserDTO {
     @Column(name = "smoking", nullable = true)
     private String smoking;
 
+    @Column(name="major",nullable = true)
+    private String major;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "regdate", updatable = false)
     private Date regdate;

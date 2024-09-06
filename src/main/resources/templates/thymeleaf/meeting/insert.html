@@ -6,7 +6,7 @@
     <title>회원가입</title>
     <!-- 부트스트랩 CSS 링크 추가 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<style>
+    <style>
         .radio-buttons input[type="radio"] {
             display: none; /* 기존 라디오 버튼 숨기기 */
         }
@@ -40,26 +40,22 @@
         .container {
             margin-bottom: 80px; /* footer의 높이와 동일한 여백을 주세요 */
         }
-	</style>
+    </style>
 </head>
 <body>
-	<div th:insert="thymeleaf/th_top_menu :: test_top_menu"></div>
+<div th:insert="thymeleaf/th_top_menu :: test_top_menu"></div>
 <div class="container">
-	
+
     <h2>미팅신청</h2>
     <form th:action="@{/meeting/insertOK}" method="post" enctype="multipart/form-data">
-		<input type="hidden" class="form-control" id="organizerNum" name="organizerNum" th:value="${num}" th:required="true">
-		<div class="form-group">
-            <label for="realname">주최자닉네임:  <span th:text="${username}"></span></label>
-            <input type="hidden" class="form-control" id="organizerNickname" name="organizerNickname" th:value="${username}" th:required="true">
+        <input type="hidden" class="form-control" id="organizerNum" name="organizerNum" th:value="${num}" th:required="true">
+        <div class="form-group">
+            <label for="organizerNickname">주최자닉네임:  <span th:text="${nickname}"></span></label>
+            <input type="hidden" class="form-control" id="organizerNickname" name="organizerNickname" th:value="${nickname}" th:required="true">
         </div>
         <div class="form-group">
             <label for="school">학교:</label>
             <input type="text" class="form-control" id="school" name="school" th:required="false">
-        </div>
-                <div class="form-group">
-            <label for="average">평균나이:</label>
-            <input type="text" class="form-control" id="average" name="average" th:required="false">
         </div>
         <div class="form-group">
             <label for="introduce">자기소개:</label>
@@ -69,39 +65,108 @@
             <label for="many">미팅참가자수:</label>
             <input type="text" class="form-control" id="many" name="many" th:required="false">
         </div>
-        <button type="submit" class="btn btn-primary">미팅생성</button>
-        <a th:href="@{/user/login}" class="btn btn-primary">뒤로 가기</a>
+
+
+    <div class="form-group">
+        <label for="average">평균나이:</label>
+        <select class="form-control" id="average" name="average">
+            <option value="">-- 평균나이 선택 --</option>
+            <option value="20">20</option>
+            <option value="21">21</option>
+            <option value="22">22</option>
+            <option value="23">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="job">직업:</label>
+        <select class="form-control" id="job" name="job">
+            <option value="">-- 직업 선택 --</option>
+            <option value="대학생">대학생</option>
+            <option value="대학원생">대학원생</option>
+            <option value="취준생">취준생</option>
+            <option value="직장인">직장인</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="region">미팅지역:</label>
+        <select class="form-control" id="region" name="region">
+            <option value="">-- 미팅지역 선택 --</option>
+            <option value="건대성수">건대성수</option>
+            <option value="신촌홍대">신촌홍대</option>
+            <option value="강남잠실">강남잠실</option>
+            <option value="인천">인천</option>
+            <option value="경기 북부">경기 북부</option>
+            <option value="경기 남부">경기 남부</option>
+            <option value="대전">대전</option>
+            <option value="대구">대구</option>
+            <option value="부산">부산</option>
+            <option value="광주">광주</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="mood">미팅 분위기:</label>
+        <select class="form-control" id="mood" name="mood">
+            <option value="">-- 미팅 분위기 선택 --</option>
+            <option value="술게임 하자!">술게임 하자!</option>
+            <option value="연애하고 싶어요!">연애하고 싶어요!</option>
+            <option value="친구만들기 !">친구만들기 !</option>
+            <option value="술은 못마셔요">술은 못마셔요</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="department">학과:</label>
+        <select class="form-control" id="department" name="department">
+            <option value="">-- 학과 선택 --</option>
+            <option value="문과">문과</option>
+            <option value="이과">이과</option>
+            <option value="예술">예술</option>
+            <option value="체육">체육</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">미팅생성</button>
     </form>
+    <a th:href="@{/user/login}" class="btn btn-primary">뒤로 가기</a>
 </div>
-    <div class="footer-content">
-        <div class="row">
-            <div class="col-3 d-flex justify-content-center">
-                <a th:href="@{/}" class="nav-link">
-                    <img src="/images/home_icon.png" alt="Home" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center" th:if="${session.username}">
-                <a th:href="@{/user/logout}" class="nav-link" onclick="showLogoutPopup()">
-                    <img src="/images/logout_icon.png" alt="Logout" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center" th:unless="${session.username}">
-                <a th:href="@{/user/login}" class="nav-link">
-                    <img src="/images/login_icon.png" alt="Login" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center">
-                <a th:href="@{/user}" class="nav-link">
-                    <img src="/images/mypage_icon.png" alt="My Page" style="width: 50px; height: 50px;">
-                </a>
-            </div>
-            <div class="col-3 d-flex justify-content-center">
-                <a th:href="@{/menu}" class="nav-link">
-                    <img src="/images/meeting_icon2.png" alt="Menu" style="width: 50px; height: 50px;">
-                </a>
-            </div>
+<div class="footer-content">
+    <div class="row">
+        <div class="col-3 d-flex justify-content-center">
+            <a th:href="@{/}" class="nav-link">
+                <img src="/images/home_icon.png" alt="Home" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center" th:if="${session.username}">
+            <a th:href="@{/user/logout}" class="nav-link" onclick="showLogoutPopup()">
+                <img src="/images/logout_icon.png" alt="Logout" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center" th:unless="${session.username}">
+            <a th:href="@{/user/login}" class="nav-link">
+                <img src="/images/login_icon.png" alt="Login" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+            <a th:href="@{/user}" class="nav-link">
+                <img src="/images/mypage_icon.png" alt="My Page" style="width: 50px; height: 50px;">
+            </a>
+        </div>
+        <div class="col-3 d-flex justify-content-center">
+            <a th:href="@{/menu}" class="nav-link">
+                <img src="/images/meeting_icon2.png" alt="Menu" style="width: 50px; height: 50px;">
+            </a>
         </div>
     </div>
+</div>
 </body>
 </html>
 
