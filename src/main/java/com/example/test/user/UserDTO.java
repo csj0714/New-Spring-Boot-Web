@@ -85,14 +85,11 @@ public class UserDTO {
     @Column(name = "tall", nullable = true)
     private String tall;
 
-    @Column(name = "department", nullable = true)
-    private String department;
-
     @Column(name = "smoking", nullable = true)
     private String smoking;
 
-    @Column(name="major",nullable = true)
-    private String major;
+    @Column(name="department",nullable = true)
+    private String department;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "regdate", updatable = false)

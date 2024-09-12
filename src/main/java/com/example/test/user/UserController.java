@@ -240,6 +240,7 @@ public class UserController {
             session.setAttribute("num", vo2.getNum());
             session.setAttribute("username", vo2.getUsername());
             session.setAttribute("pw", vo2.getPw());
+            session.setAttribute("nickname", vo2.getNickname());
             session.setAttribute("gender", vo2.getGender());
             session.setAttribute("kakaoID", vo2.getKakaoID());
             session.setAttribute("age", vo2.getAge());
@@ -248,7 +249,13 @@ public class UserController {
             session.setAttribute("tel", vo2.getTel());
             session.setAttribute("savename", vo2.getSave_name());
             session.setAttribute("form", vo2.getForm());
+            session.setAttribute("job", vo2.getJob());
             session.setAttribute("introduce", vo2.getIntroduce());
+            session.setAttribute("region", vo2.getRegion());
+            session.setAttribute("military", vo2.getMilitary());
+            session.setAttribute("tall", vo2.getTall());
+            session.setAttribute("smoking", vo2.getSmoking());
+            session.setAttribute("department", vo2.getDepartment());
 
             return "redirect:/";
         }
@@ -263,6 +270,7 @@ public class UserController {
         session.removeAttribute("num");
         session.removeAttribute("username");
         session.removeAttribute("pw");
+        session.removeAttribute("nickname");
         session.removeAttribute("gender");
         session.removeAttribute("kakaoID");
         session.removeAttribute("age");
@@ -270,6 +278,13 @@ public class UserController {
         session.removeAttribute("school");
         session.removeAttribute("tel");
         session.removeAttribute("savename");
+        session.removeAttribute("form");
+        session.removeAttribute("introduce");
+        session.removeAttribute("region");
+        session.removeAttribute("military");
+        session.removeAttribute("tall");
+        session.removeAttribute("smoking");
+        session.removeAttribute("department");
 
         return "redirect:/";
     }
@@ -281,6 +296,7 @@ public class UserController {
         String username = (String) session.getAttribute("username");
         String pw = (String) session.getAttribute("pw");
         String gender = (String) session.getAttribute("gender");
+        String nickname = (String) session.getAttribute("nickname");
         String kakaoID = (String) session.getAttribute("kakaoID");
         Integer age = (Integer) session.getAttribute("age");
         String name = (String) session.getAttribute("name");
@@ -289,12 +305,21 @@ public class UserController {
         String savename = (String) session.getAttribute("savename");
         String form = (String) session.getAttribute("form");
         String introduce = (String) session.getAttribute("introduce");
+        String job = (String) session.getAttribute("job");
+        String region = (String) session.getAttribute("region");
+        String military = (String) session.getAttribute("military");
+        String tall = (String) session.getAttribute("tall");
+        String smoking = (String) session.getAttribute("smoking");
+        String department = (String) session.getAttribute("department");
+
+
         log.info("savename:{}", savename);
 
         model.addAttribute("title", "회원수정페이지");
         model.addAttribute("username", username);
         model.addAttribute("pw", pw);
         model.addAttribute("gender", gender);
+        model.addAttribute("nickname", nickname);
         model.addAttribute("kakaoID", kakaoID);
         model.addAttribute("age", age);
         model.addAttribute("name", name);
@@ -303,6 +328,12 @@ public class UserController {
         model.addAttribute("savename", savename);
         model.addAttribute("form", form);
         model.addAttribute("introduce", introduce);
+        model.addAttribute("job", job);
+        model.addAttribute("region", region);
+        model.addAttribute("military", military);
+        model.addAttribute("tall", tall);
+        model.addAttribute("smoking", smoking);
+        model.addAttribute("department", department);
 
         model.addAttribute("content", "thymeleaf/user/th_update");
         model.addAttribute("title", "회원정보페이지");

@@ -31,108 +31,181 @@
 <div class="container mt-5">
     <h2 class="mb-3">회원정보 및 수정</h2>
     <form th:action="@{/user/info/updateOK}" method="post" encType="multipart/form-data">
-		
-		<div class="form-group">
-            <label for="name">아이디: <span th:text="${username}"></span></label>
-            <input type="hidden" class="form-control" id="username" name="username" th:value="${username}" required>
-        </div>
-
         <div class="form-group">
-            <label for="pw">비밀번호: <span th:text="${#strings.repeat('*', pw.length)}"></span></label>
-            <input type="hidden" class="form-control" id="pw" name="pw" th:value="${pw}" required>
+            <label for="username">아이디:</label>
+            <input type="text" class="form-control" id="username" name="username" th:value="${username}" readonly>
         </div>
         <div class="form-group">
-            <label for="realname">이름:</label> 
+            <label for="pw">비밀번호:</label>
+            <input type="hidden" class="form-control" id="pw" name="pw"  th:value="${pw}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="realname">이름:</label>
             <input type="text" class="form-control" id="realname" name="realname" th:value="${name}" required>
         </div>
-		<div class="form-group">
-		    <label for="gender">성별:</label><br>
-		    <div class="radio-buttons">
-		        <input type="radio" id="male" name="gender" value="남" th:required="true" th:checked="${gender == '남'}">
-		        <label for="male">남성</label>
-		        
-		        <input type="radio" id="female" name="gender" value="여" th:checked="${gender == '여'}">
-		        <label for="female">여성</label>
-		    </div>
-		</div>
+        <div class="form-group">
+            <label for="gender">(필수) 성별:</label><br>
+            <div class="radio-buttons" id="gender">
+                <input type="radio" id="male" name="gender" value="남" th:checked="${gender == '남'}">
+                <label for="male">남성</label>
+
+                <input type="radio" id="female" name="gender" value="여" th:checked="${gender == '여'}">
+                <label for="female">여성</label>
+            </div>
+        </div>
         <div class="form-group">
             <label for="nickname">(필수) 닉네임:</label>
-            <input type="text" class="form-control" id="nickname" name="nickname" th:value="${nickname}"th:required="true">
+            <input type="text" class="form-control" id="nickname" name="nickname" th:value="${nickname}" required>
         </div>
         <div class="form-group">
             <label for="kakaoID">카카오톡 ID(검색허용필수):</label>
-            <input type="text" class="form-control" id="kakaoID" name="kakaoID" th:value="${kakaoID}">
+            <input type="text" class="form-control" id="kakaoID" name="kakaoID" th:value="${kakaoID}" required>
         </div>
         <div class="form-group">
-            <label for="tel">전화번호:</label>
-            <input type="text" class="form-control" id="tel" name="tel" th:value="${tel}">
-        </div>
-		<div class="form-group">
-            <label for="age">나이:</label>
-            <input type="text" class="form-control" id="age" name="age" th:value="${age}">
+            <label for="age">(필수) 나이:</label>
+            <input type="number" class="form-control" id="age" name="age" th:value="${age}" required>
         </div>
         <div class="form-group">
-            <label for="school">학교:</label>
-            <input type="text" class="form-control" id="school" name="school" th:value="${school}">
+            <label for="school">(필수) 학교:</label>
+            <input type="text" class="form-control" id="school" name="school" th:value="${school}" required>
         </div>
         <div class="form-group">
-		    <label for="form">체형:</label><br>
-		    <div class="radio-buttons" id="form">
-		        <input type="radio" id="thin" name="form" value="마른" th:required="true" th:checked="${form == '마른'}">
-		        <label for="thin">마른</label>
-		        
-		        <input type="radio" id="common" name="form" value="보통" th:checked="${form == '보통'}">
-		        <label for="common">보통</label>
-		        
-		        <input type="radio" id="chubby" name="form" value="통통" th:checked="${form == '통통'}">
-		        <label for="chubby">통통</label>
-		    </div>
-		</div>
+            <label for="tel">(필수) 전화번호:</label>
+            <input type="text" class="form-control" id="tel" name="tel" th:value="${tel}" required>
+        </div>
+        <div class="form-group">
+            <label for="introduce">자기소개:</label>
+            <input type="text" class="form-control" id="introduce" name="introduce" th:value="${introduce}">
+        </div>
         <div class="form-group">
             <label for="job">직업:</label>
-            <input type="text" class="form-control" id="job" name="job" th:value="${job}">
+            <select class="form-control" id="job" name="job">
+                <option value="" th:selected="${job == null}">-- 직업 선택 --</option>
+                <option value="대학생" th:selected="${job == '대학생'}">대학생</option>
+                <option value="대학원생" th:selected="${job == '대학원생'}">대학원생</option>
+                <option value="취준생" th:selected="${job == '취준생'}">취준생</option>
+                <option value="직장인" th:selected="${job == '직장인'}">직장인</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="department">학과:</label>
-            <input type="text" class="form-control" id="department" name="department" th:value="${department}">
+            <select class="form-control" id="department" name="department">
+                <option value="" th:selected="${department == null}">-- 학과 선택 --</option>
+                <option value="상경" th:selected="${department == '상경'}">상경</option>
+                <option value="사회과학" th:selected="${department == '사회과학'}">사회과학</option>
+                <option value="공학" th:selected="${department == '공학'}">공학</option>
+                <option value="교육" th:selected="${department == '교육'}">교육</option>
+                <option value="생활과학" th:selected="${department == '생활과학'}">생활과학</option>
+                <option value="인문" th:selected="${department == '인문'}">인문</option>
+                <option value="의약학" th:selected="${department == '의약학'}">의약학</option>
+                <option value="미술" th:selected="${department == '미술'}">미술</option>
+                <option value="예술" th:selected="${department == '예술'}">예술</option>
+                <option value="체육" th:selected="${department == '체육'}">체육</option>
+                <option value="특수" th:selected="${department == '특수'}">특수</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="region">지역:</label>
+            <select class="form-control" id="region" name="region">
+                <option value="" th:selected="${region == null}">-- 지역 선택 --</option>
+                <option value="서울" th:selected="${region == '서울'}">서울</option>
+                <option value="인천" th:selected="${region == '인천'}">인천</option>
+                <option value="경기남부" th:selected="${region == '경기남부'}">경기남부</option>
+                <option value="경기북부" th:selected="${region == '경기북부'}">경기북부</option>
+                <option value="대전" th:selected="${region == '대전'}">대전</option>
+                <option value="광주" th:selected="${region == '광주'}">광주</option>
+                <option value="대구" th:selected="${region == '대구'}">대구</option>
+                <option value="부산" th:selected="${region == '부산'}">부산</option>
+                <option value="울산" th:selected="${region == '울산'}">울산</option>
+                <option value="충남" th:selected="${region == '충남'}">충남</option>
+                <option value="충북" th:selected="${region == '충북'}">충북</option>
+                <option value="강원" th:selected="${region == '강원'}">강원</option>
+                <option value="전남" th:selected="${region == '전남'}">전남</option>
+                <option value="전북" th:selected="${region == '전북'}">전북</option>
+                <option value="경남" th:selected="${region == '경남'}">경남</option>
+                <option value="경북" th:selected="${region == '경북'}">경북</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="smoking">흡연유무:</label><br>
             <div class="radio-buttons" id="smoking">
-                <input type="radio" id="yes" name="gender" value="yes" th:required="true" th:checked="${smoking == 'yes'}">
-                <label for="male">흡연</label>
+                <input type="radio" id="yes-smoking" name="smoking" value="yes-smoking" th:checked="${smoking == 'yes-smoking'}">
+                <label for="yes-smoking">흡연</label>
 
-                <input type="radio" id="no" name="gender" value="no" th:checked="${smoking == 'no'}">
-                <label for="female">비흡연</label>
+                <input type="radio" id="non-smoking" name="smoking" value="non-smoking" th:checked="${smoking == 'non-smoking'}">
+                <label for="non-smoking">비흡연</label>
             </div>
         </div>
         <div class="form-group">
-            <label for="school">지역:</label>
-            <input type="text" class="form-control" id="region" name="region" th:value="${region}">
+            <label for="form">체형:</label><br>
+            <div class="radio-buttons" id="form">
+                <input type="radio" id="thin" name="form" value="마른" th:checked="${form == '마른'}">
+                <label for="thin">마른</label>
+
+                <input type="radio" id="common" name="form" value="보통" th:checked="${form == '보통'}">
+                <label for="common">보통</label>
+
+                <input type="radio" id="chubby" name="form" value="통통" th:checked="${form == '통통'}">
+                <label for="chubby">통통</label>
+
+                <input type="radio" id="muscular" name="form" value="근육" th:checked="${form == '근육'}">
+                <label for="muscular">근육</label>
+
+                <input type="radio" id="slimfit" name="form" value="슬림탄탄" th:checked="${form == '슬림탄탄'}">
+                <label for="slimfit">슬림탄탄</label>
+
+                <input type="radio" id="glamorous" name="form" value="글래머" th:checked="${form == '글래머'}">
+                <label for="glamorous">글래머</label>
+            </div>
         </div>
         <div class="form-group">
-            <label for="army">병역:</label><br>
-            <div class="radio-buttons" id="army">
-                <input type="radio" id="fulfilled" name="fulfilled" value="fulfilled" th:required="true" th:checked="${army == 'fulfilled'}">
-                <label for="male">군필</label>
+            <label for="military">병역:</label><br>
+            <div class="radio-buttons" id="military">
+                <input type="radio" id="fulfilled" name="military" value="fulfilled" th:checked="${military == 'fulfilled'}">
+                <label for="fulfilled">군필</label>
 
-                <input type="ra       </div>
+                <input type="radio" id="unfulfilled" name="military" value="unfulfilled" th:checked="${military == 'unfulfilled'}">
+                <label for="unfulfilled">미필</label>
+            </div>
         </div>
         <div class="form-group">
-                <label for="introduce">자기소개:</label>
-                <input type="text" class="form-control" id="introduce" name="introduce" th:value="${introduce}">
-            </div>
-            <div class="form-group">
-                <label for="file">(선택) 프로필이미지:</label>
-                <input type="file" class="form-control" id="file" name="file" th:required="false">
-            </div>
-            <button type="submit" class="btn btn-primary">저장</button>
-            <a href="/user/info/delete"><button type="button" class="btn btn-primary">삭제</button></a>
-            <a th:href="@{/user}" class="btn btn-primary">뒤로 가기</a>
-    </form>dio" id="unfulfilled" name="unfulfilled" value="unfulfilled" th:checked="${army == 'unfulfilled'}">
-                <label for="female">미필</label>
+            <label for="tall">키:</label><br>
+            <div class="radio-buttons" id="tall">
+                <input type="radio" id="160down" name="tall" value="160down" th:checked="${tall == '160down'}">
+                <label for="160down">160미만</label>
 
+                <input type="radio" id="160up" name="tall" value="160up" th:checked="${tall == '160up'}">
+                <label for="160up">160이상 165미만</label>
+
+                <input type="radio" id="165up" name="tall" value="165up" th:checked="${tall == '165up'}">
+                <label for="165up">165이상 170미만</label>
+
+                <input type="radio" id="170up" name="tall" value="170up" th:checked="${tall == '170up'}">
+                <label for="170up">170이상 175미만</label>
+
+                <input type="radio" id="175up" name="tall" value="175up" th:checked="${tall == '175up'}">
+                <label for="175up">175이상 180미만</label>
+
+                <input type="radio" id="180up" name="tall" value="180up" th:checked="${tall == '180up'}">
+                <label for="180up">180이상 185미만</label>
+
+                <input type="radio" id="185up" name="tall" value="185up" th:checked="${tall == '185up'}">
+                <label for="185up">185이상 190이하</label>
+
+                <input type="radio" id="190up" name="tall" value="190up" th:checked="${tall == '190up'}">
+                <label for="190up">190이상</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="file">(선택) 프로필이미지:</label>
+            <input type="file" class="form-control" id="file" name="file">
+        </div>
+        <button type="submit" class="btn btn-primary">저장</button>
+        <a href="/user/info/delete"><button type="button" class="btn btn-danger">삭제</button></a>
+    </form>
+    <a th:href="@{/user}" class="btn btn-primary">뒤로 가기</a>
 </div>
+
 <div class="footer-content">
     <div class="row">
         <div class="col-3 d-flex justify-content-center">

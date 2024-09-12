@@ -41,20 +41,20 @@
 	                <p><strong>안녕하세요,  <span th:text="${name}"></span>님</strong></p>
 	                <p><strong>이름:</strong> <span th:text="${name}"></span></p>
 	                <p><strong>아이디:</strong> <span th:text="${username}"></span></p>
+                    <p><strong>닉네임:</strong> <span th:text="${nickname}"></span></p>
 <!--	                <p><strong>비밀번호:</strong> <span th:text="${#strings.repeat('*', pw.length)}"></span></p>-->
 	                <p><strong>성별:</strong> <span th:text="${gender}"></span></p>
 	                <p><strong>카카오ID:</strong> <span th:text="${kakaoID}"></span></p>
 	                <p><strong>나이:</strong> <span th:text="${age}"></span></p>
 	                <p><strong>학교:</strong> <span th:text="${school}"></span></p>
 	                <p><strong>전화번호:</strong> <span th:text="${tel}"></span></p>
-                    <p><strong>나이대:</strong> <span th:text="${ageRange}"></span></p>
                     <p><strong>직업:</strong> <span th:text="${job}"></span></p>
                     <!--	                <p><strong>비밀번호:</strong> <span th:text="${#strings.repeat('*', pw.length)}"></span></p>-->
                     <p><strong>학과:</strong> <span th:text="${department}"></span></p>
                     <p><strong>흡연유무:</strong> <span th:text="${smoking}"></span></p>
                     <p><strong>나이:</strong> <span th:text="${age}"></span></p>
                     <p><strong>체형:</strong> <span th:text="${form}"></span></p>
-                    <p><strong>병역:</strong> <span th:text="${army}"></span></p>
+                    <p><strong>병역:</strong> <span th:text="${military}"></span></p>
                     <p><strong>키:</strong> <span th:text="${tall}"></span></p>
 					<img th:src="@{'/files/' + ${savename}}" alt="Image" width="100px">
 
