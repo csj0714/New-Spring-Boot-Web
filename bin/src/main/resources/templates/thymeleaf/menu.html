@@ -39,7 +39,7 @@
         
         <div th:if="${username}">
             <a th:href="@{/date}" class="btn btn-link">소개팅</a>
-            <a th:href="@{/meeting}" class="btn btn-link">미팅</a>
+            <a th:if="${username == 'admin'}" th:href="@{/meeting/selectAll}" class="btn btn-link">미팅</a>
         </div>
         
         <a th:href="@{/meeting/insert}" class="btn btn-link">미팅생성</a>

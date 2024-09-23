@@ -1,5 +1,6 @@
 package com.example.test.date;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.example.test.meeting.MeetingDTO;
@@ -45,13 +46,13 @@ public class DateDTO {
 
 	@Column(name="accept",nullable = false)
 	private String accept;
-	
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "regdate", updatable = false)
-    private Date regdate;
 
-    @PrePersist
-    protected void onCreate() {
-        regdate = new Date();
-    }
+	@Column(name = "regdate", updatable = false)
+	private LocalDate regdate;
+
+	@PrePersist
+	protected void onCreate() {
+		regdate = LocalDate.now();
+	}
+
 }

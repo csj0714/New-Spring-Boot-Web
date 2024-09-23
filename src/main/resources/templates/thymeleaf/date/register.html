@@ -22,7 +22,7 @@
         <h2>미팅신청</h2>
         <form th:action="@{/date/registerOK}" method="post" onsubmit="showPopup()">
             <div class="form-group">
-            <label for="name"><span th:text="${vo2.realname}"></span>님에게 미팅신청을 하시겠습니까?</label>
+            <span th:text="${vo2.nickname}"></span>님에게 미팅신청을 하시겠습니까?
             <input type="hidden" class="form-control" id="num" name="num" th:value="${vo2.num}" required>
             </div>
             <button id="btn" type="submit" class="btn btn-danger">신청하기</button>
